@@ -1,1 +1,25 @@
 .DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+venv_*/
+
+# IDE
+.vscode/
+.idea/
+
+# Django
+*.log
+*.pot
+*.sqlite3
+db.sqlite3
+
+# Environment
+.env
+*.env.local
