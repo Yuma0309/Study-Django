@@ -123,3 +123,5 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert alert-success',
     messages.INFO: 'alert alert-info',
 }
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
