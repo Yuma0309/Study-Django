@@ -28,7 +28,45 @@ class InquiryView(generic.FormView):
 class DiaryListView(LoginRequiredMixin, generic.ListView):
     model = Diary
     template_name = 'diary_list.html'
+    paginate_by = 2
 
     def get_queryset(self):
         diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
         return diaries
+
+
+class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Diary
+    template_name = 'diary_create.html'
+    fields = ['title', 'content', 'photo1', 'photo2', 'photo3']
+    success_url = reverse_lazy('diary:diary_list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, '日記を作成しました。')
+        return super().form_valid(form)
+
+class DiaryDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Diary
+    template_name = 'diary_detail.html'
+
+class DiaryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Diary
+    template_name = 'diary_update.html'
+    fields = ['title', 'content', 'photo1', 'photo2', 'photo3']
+
+    def get_success_url(self):
+        return reverse_lazy('diary:diary_detail', kwargs={'pk': self.kwargs['pk']})
+
+    def form_valid(self, form):
+        messages.success(self.request, '日記を更新しました。')
+        return super().form_valid(form)
+
+class DiaryDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Diary
+    template_name = 'diary_delete.html'
+    success_url = reverse_lazy('diary:diary_list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, '日記を削除しました。')
+        return super().delete(request, *args, **kwargs)
