@@ -70,3 +70,8 @@ class DiaryDeleteView(LoginRequiredMixin, generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, '日記を削除しました。')
         return super().delete(request, *args, **kwargs)
+
+class DetailView(generic.DetailView):
+    model = Post
+    slug_field = "title" # モデルのフィールドの名前
+    slug_url_kwarg = "title" # url.pyでのキーワードの名前
