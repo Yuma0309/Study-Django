@@ -76,6 +76,7 @@ class DetailView(generic.DetailView):
     slug_field = "title" # モデルのフィールドの名前
     slug_url_kwarg = "title" # url.pyでのキーワードの名前
 
-class DiaryDetailView(LoginRequiredMixin, OnlyYouMixin, generic.DetailView):
+class DiaryDetailView(LoginRequiredMixin, generic.DetailView):
     model = Diary
     template_name = 'diary_detail.html'
+    pk_url_kwarg = 'id'
